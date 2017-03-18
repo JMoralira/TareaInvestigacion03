@@ -89,7 +89,42 @@ public class EquiposCtrl {
         }
         return resp;
     }
-    
+  
+      public Equipos cons(int codi)
+    {
+        //List<Equipos> resp = new ArrayList();
+        Equipos resp= null;
+        Connection cn = new Conexion().getConn();
+        try 
+        {
+            
+            PreparedStatement cmd = cn.prepareStatement("select * from equipos where codi_equi = ?");
+            cmd.setString(1, String.valueOf(codi));
+            ResultSet rs = cmd.executeQuery();
+            while(rs.next())
+            {
+                resp = (new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3)));               
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        finally
+        {
+            try {
+                if(cn != null)
+                {
+                    if(!cn.isClosed())
+                    {
+                        cn.close();
+                    }
+                }
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        }
+        return resp;
+    }
+  
     //MODIFICAR
     public boolean modi(Equipos obje)
     {

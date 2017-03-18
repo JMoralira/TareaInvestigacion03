@@ -41,6 +41,9 @@ public class EquiposServ extends HttpServlet {
         }
         else
         {
+            String CRUD = request.getParameter("btonEqui");
+            if(CRUD.equals("Guardar"))
+            {
             Equipos obje = new Equipos();
             //obje.setCodiEqui(0);
             obje.setNombEqui(request.getParameter("nomb"));
@@ -53,6 +56,37 @@ public class EquiposServ extends HttpServlet {
             else
             {
                 mens = "Error al guardar";
+            }
+            }
+            else if(CRUD.equals("Consultar"))
+            {
+                int codi= Integer.parseInt(request.getParameter("codiEquiRadi").isEmpty() ? "-1" : request.getParameter("codiEquiRadi"));
+                Equipos obje  = new EquiposCtrl().cons(codi);
+                if(obje != null)
+                {
+                request.setAttribute("codi", obje.getCodiEqui());                
+                request.setAttribute("nomb", obje.getNombEqui());                
+                request.setAttribute("desc", obje.getDescEqui());     
+                }
+                else 
+                {
+                    mens= "Error al consultar";
+                }
+            }
+            else if (CRUD.equals("Eliminar"))
+            {
+             Equipos obje = new Equipos();
+             int codi= Integer.parseInt(request.getParameter("codiEquiRadi").isEmpty() ? "-1" : request.getParameter("codiEquiRadi"));
+            obje.setCodiEqui(codi);
+            if(new EquiposCtrl().elim(obje))
+            {
+                
+                mens = "Dato Eliminado";
+            }
+            else
+            {
+                mens = "Error al Eliminar";
+            }
             }
             
             request.setAttribute("mensAler",mens);

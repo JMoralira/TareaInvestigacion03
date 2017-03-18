@@ -1,3 +1,5 @@
+<%@page import="com.sv.udb.controlador.EquiposCtrl"%>
+<%@page import="com.sv.udb.modelo.Equipos"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,10 +13,36 @@
         
         <form method="POST" action="EquiposServ" name="DEMO">
         <h1>${mensAler}</h1>
-        <input type="text" name="codi" id="codi"> <br>
-        <input type="text" name="nomb" id="nomb"> <br>
-        <input type="text" name="desc" id="desc"> <br>
-        <input type="submit" text="guardar" value="Guardar"> <br>
+        <input type="text" name="codi" id="codi" value="${codi}"> <br>
+        <input type="text" name="nomb" id="nomb" value="${nomb}"> <br>
+        <input type="text" name="desc" id="desc" value="${desc}"> <br>
+        <input type="submit" name="btonEqui" value="Guardar"> <br>
         </form>
+        
+        <h1>La Tabla</h1>
+        <form method="POST" action="EquiposServ" name="TABLA">
+        <table border="1">
+            <tr>
+                <th>Cons</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+            </tr>
+            <%
+            for (Equipos temp : new EquiposCtrl().consTodo())
+            {
+            %>
+            <tr>
+                <td><input type="radio" name="codiEquiRadi" value="<%= temp.getCodiEqui() %>"</td>
+                <td><%= temp.getNombEqui() %></td>
+                <td><%= temp.getDescEqui() %></td>
+            </tr>
+            <%
+            }
+            %>
+        </table>
+        <input type="submit" name="btonEqui" value="Consultar">
+        <input type="submit" name="btonEqui" value="Eliminar">
+        </form>
+        
     </body>
 </html>
