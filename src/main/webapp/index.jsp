@@ -13,10 +13,19 @@
         
         <form method="POST" action="EquiposServ" name="DEMO">
         <h1>${mensAler}</h1>
-        <input type="text" name="codi" id="codi" value="${codi}"> <br>
-        <input type="text" name="nomb" id="nomb" value="${nomb}"> <br>
-        <input type="text" name="desc" id="desc" value="${desc}"> <br>
-        <input type="submit" name="btonEqui" value="Guardar"> <br>
+        <label>Codigo:</label>
+        <input type="text" name="codi" id="codi" value="${codi}" readonly> <br>
+        <label>Nombre:</label>
+        <input type="text" name="nomb" id="nomb" value="${nomb}" required> <br>
+        <label>Descripcion:</label>
+        <input type="text" name="desc" id="desc" value="${desc}" required> <br>
+        <input type="submit" name="btonEqui" value="Guardar">
+        <input type="submit" name="btonEqui" value="Modificar">
+        <input type="submit" name="btonEqui" value="Eliminar">
+        <input type="submit" name="btonEqui" value="Nuevo">
+        <ul>
+            <li><a href="juga.jsp">Jugadores</a></li>
+        </ul>
         </form>
         
         <h1>La Tabla</h1>
@@ -41,7 +50,6 @@
             %>
         </table>
         <input type="submit" name="btonEqui" value="Consultar">
-        <input type="submit" name="btonEqui" value="Eliminar">
         </form>
         
     </body>

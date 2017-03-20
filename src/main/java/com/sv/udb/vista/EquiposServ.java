@@ -48,6 +48,7 @@ public class EquiposServ extends HttpServlet {
             //obje.setCodiEqui(0);
             obje.setNombEqui(request.getParameter("nomb"));
             obje.setDescEqui(request.getParameter("desc"));
+            
             if(new EquiposCtrl().guar(obje))
             {
                 
@@ -66,7 +67,8 @@ public class EquiposServ extends HttpServlet {
                 {
                 request.setAttribute("codi", obje.getCodiEqui());                
                 request.setAttribute("nomb", obje.getNombEqui());                
-                request.setAttribute("desc", obje.getDescEqui());     
+                request.setAttribute("desc", obje.getDescEqui()); 
+                mens = "Información consultada";
                 }
                 else 
                 {
@@ -76,17 +78,38 @@ public class EquiposServ extends HttpServlet {
             else if (CRUD.equals("Eliminar"))
             {
              Equipos obje = new Equipos();
-             int codi= Integer.parseInt(request.getParameter("codiEquiRadi").isEmpty() ? "-1" : request.getParameter("codiEquiRadi"));
-            obje.setCodiEqui(codi);
+             obje.setCodiEqui(Integer.parseInt(request.getParameter("codi")));
             if(new EquiposCtrl().elim(obje))
             {
-                
                 mens = "Dato Eliminado";
             }
             else
             {
                 mens = "Error al Eliminar";
             }
+            }
+            else if (CRUD.equals("Modificar"))
+            {
+                Equipos obje = new Equipos();
+                //int codi= Integer.parseInt(request.getParameter("codi").isEmpty() ? "-1" : request.getParameter("codi"));
+                //obje.setCodiEqui(codi);
+                obje.setCodiEqui(Integer.parseInt(request.getParameter("codi")));
+                obje.setNombEqui(request.getParameter("nomb"));
+                obje.setDescEqui(request.getParameter("desc"));
+                if(new EquiposCtrl().modi(obje))
+                {
+                    mens = "Datos Modificados";
+                }
+                else
+                {
+                    mens = "Error al Modificar";
+                }
+            }
+            else if(CRUD.equals("Nuevo"))
+            {
+                request.setAttribute("codi", "");
+                request.setAttribute("nomb", "");
+                request.setAttribute("desc", "");
             }
             
             request.setAttribute("mensAler",mens);

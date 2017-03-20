@@ -82,6 +82,39 @@ public class JugadoresCtrl {
         return resp;
     }
     
+     public Jugadores cons(int codi)
+    {
+        //List<Jugadores> resp = new ArrayList();
+        Jugadores resp = null;
+        Connection cn = new Conexion().getConn();
+        try {
+            PreparedStatement cmd = cn.prepareStatement("select * from jugadores where codi_juga = ?");
+            cmd.setString(1, String.valueOf(codi));
+            ResultSet rs = cmd.executeQuery();
+            while(rs.next())
+            {
+                resp = (new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6)));               
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        finally
+        {
+            try {
+                if(cn != null)
+                {
+                    if(!cn.isClosed())
+                    {
+                        cn.close();
+                    }
+                }
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        }
+        return resp;
+    }
+    
       //MODIFICAR
     public boolean modi(Jugadores obje)
     {
