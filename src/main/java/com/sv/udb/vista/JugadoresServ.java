@@ -7,18 +7,28 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.JugadoresCtrl;
 import com.sv.udb.modelo.Jugadores;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Jose Lira
  */
+@MultipartConfig
 @WebServlet(name = "JugadoresServ", urlPatterns = {"/JugadoresServ"})
 public class JugadoresServ extends HttpServlet {
 
@@ -50,7 +60,16 @@ public class JugadoresServ extends HttpServlet {
                obje.setEdadJuga (Integer.parseInt(request.getParameter("edad")));
                obje.setAltuJuga (Double.parseDouble(request.getParameter("altu")));
                obje.setPesoJuga(Double.parseDouble(request.getParameter("peso")));               
-           
+               Part filePart = request.getPart("ima");
+            int fotoSize = (int)filePart.getSize();
+            byte[] foto = null;
+            foto = new byte[fotoSize];
+            try(DataInputStream dataImg = new DataInputStream(filePart.getInputStream()))
+            {
+                dataImg.readFully(foto);
+            }
+            obje.setImag(foto);
+          
            if(new JugadoresCtrl().guar(obje))
            {
                mens= "Datos Guardados";
@@ -72,6 +91,7 @@ public class JugadoresServ extends HttpServlet {
                        request.setAttribute("edad", obje.getEdadJuga());
                        request.setAttribute("altu", obje.getAltuJuga());
                        request.setAttribute("peso", obje.getPesoJuga());
+                       request.setAttribute("ima", obje.getImag());
                        mens="Información consultada";                       
                    }
                    else 
@@ -101,6 +121,15 @@ public class JugadoresServ extends HttpServlet {
            obje.setEdadJuga(Integer.parseInt(request.getParameter("edad")));
            obje.setAltuJuga(Double.parseDouble(request.getParameter("altu")));
            obje.setPesoJuga(Double.parseDouble(request.getParameter("peso")));
+           Part filePart = request.getPart("ima");
+                int fotoSize = (int)filePart.getSize();
+            byte[] foto = null;
+            foto = new byte[fotoSize];
+            try(DataInputStream dataImg = new DataInputStream(filePart.getInputStream()))
+            {
+                dataImg.readFully(foto);
+            }
+            obje.setImag(foto);
            if(new JugadoresCtrl().modi(obje))
            {
                mens = "Datos Modificados";               

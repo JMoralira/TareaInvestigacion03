@@ -85,7 +85,7 @@ public class EquiposServ extends HttpServlet {
                 request.setAttribute("codi", obje.getCodiEqui());                
                 request.setAttribute("nomb", obje.getNombEqui());                
                 request.setAttribute("desc", obje.getDescEqui()); 
-                
+                request.setAttribute("ima", obje.getImag());
                 mens = "Información consultada";
                 }
                 else 
@@ -114,6 +114,15 @@ public class EquiposServ extends HttpServlet {
                 obje.setCodiEqui(Integer.parseInt(request.getParameter("codi")));
                 obje.setNombEqui(request.getParameter("nomb"));
                 obje.setDescEqui(request.getParameter("desc"));
+                Part filePart = request.getPart("ima");
+                int fotoSize = (int)filePart.getSize();
+            byte[] foto = null;
+            foto = new byte[fotoSize];
+            try(DataInputStream dataImg = new DataInputStream(filePart.getInputStream()))
+            {
+                dataImg.readFully(foto);
+            }
+            obje.setImag(foto);
                 if(new EquiposCtrl().modi(obje))
                 {
                     mens = "Datos Modificados";

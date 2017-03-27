@@ -5,8 +5,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
-    <body>
+<html>    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel='stylesheet' href='webjars/materialize/0.97.3/dist/css/materialize.min.css'>
@@ -15,6 +14,7 @@
             <script type="text/javascript" src="webjars/materialize/0.97.3/dist/js/materialize.min.js"></script>
         <title>JSP Page</title>
     </head>
+    <body>
     <div class="container">
         <h1>${mensAler}</h1>
         <form method="POST" action="EquiposServ" name="DEMO" enctype="multipart/form-data">
@@ -59,7 +59,8 @@
             <tr>
                 <th>Cons</th>
                 <th>Nombre</th>
-                <th>Descripcion</th>                
+                <th>Descripcion</th>      
+                <th>Imagen</th>
             </tr>
             </thead>
             <tbody>
@@ -74,8 +75,7 @@
                 <td><p><input name="codiEquiRadi" type="radio" id="<%=temp.getCodiEqui()%>" value="<%=temp.getCodiEqui()%>" />
                         <label for="<%=temp.getCodiEqui()%>"></label></p></td>
                 <td><%= temp.getNombEqui() %></td>
-                <td><%= temp.getDescEqui() %></td>
-                <td><%= temp.getDescEqui() %></td>
+                <td><%= temp.getDescEqui() %></td>                
                  <td><img src="data:image/*;base64,<%=bphoto%>" class="materialboxed" width="100" height="100"></td>
             </tr>
             <%

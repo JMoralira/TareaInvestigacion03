@@ -2,6 +2,8 @@ package com.sv.udb.controlador;
 
 import com.sv.udb.modelo.Jugadores;
 import com.sv.udb.recursos.Conexion;
+import java.awt.Image;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
