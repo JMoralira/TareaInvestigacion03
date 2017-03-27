@@ -2,8 +2,9 @@
 package com.sv.udb.controlador;
 
 import com.sv.udb.modelo.Equipos;
-import com.sv.udb.modelo.Partidos;
 import com.sv.udb.recursos.Conexion;
+import java.awt.Image;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,9 +31,10 @@ public class EquiposCtrl {
         Connection cn = new Conexion().getConn();
         try
         {
-            PreparedStatement cmd = cn.prepareStatement("insert into equipos values(NULL,?,?)");
+            PreparedStatement cmd = cn.prepareStatement("insert into equipos values(NULL,?,?,?)");
             cmd.setString(1, obje.getNombEqui());
             cmd.setString(2, obje.getDescEqui());
+            cmd.setBytes(3, obje.getImag());
             cmd.executeUpdate();
             resp=true;
         }
@@ -68,7 +70,7 @@ public class EquiposCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp.add(new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3)));               
+                resp.add(new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getBytes(4)));               
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -103,7 +105,7 @@ public class EquiposCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp = (new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3)));               
+                resp = (new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getBytes(4)));               
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -132,7 +134,7 @@ public class EquiposCtrl {
         Connection cn = new Conexion().getConn();
         try
         {
-            PreparedStatement cmd = cn.prepareStatement("update equipos set nomb_equi = '"+obje.getNombEqui()+"' , desc_equi = '"+obje.getDescEqui()+"' where codi_equi = "+obje.getCodiEqui()+"");
+            PreparedStatement cmd = cn.prepareStatement("update equipos set nomb_equi = '"+obje.getNombEqui()+"' , desc_equi = '"+obje.getDescEqui()+"' ,imagen = '"+obje.getImag()+"' where codi_equi = "+obje.getCodiEqui()+"");
             cmd.executeUpdate();
             resp=true;
         }

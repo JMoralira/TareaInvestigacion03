@@ -15,14 +15,17 @@ public class Equipos {
     private int codiEqui;
     private String nombEqui;
     private String descEqui;
+    private byte[] imag;
+    
     
     public Equipos(){
     }
 
-    public Equipos(int codiEqui, String nombEqui, String descEqui) {
+    public Equipos(int codiEqui, String nombEqui, String descEqui, byte[] imag) {
         this.codiEqui = codiEqui;
         this.nombEqui = nombEqui;
         this.descEqui = descEqui;
+        this.imag = imag;
     }
 
      public int getCodiEqui() {
@@ -47,6 +50,14 @@ public class Equipos {
 
     public void setDescEqui(String descEqui) {
         this.descEqui = descEqui;
+    }
+
+    public byte[] getImag() {
+        return imag;
+    }
+
+    public void setImag(byte[] imag) {
+        this.imag = imag;
     }
 
     @Override

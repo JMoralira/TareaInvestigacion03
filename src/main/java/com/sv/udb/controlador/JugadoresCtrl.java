@@ -20,12 +20,13 @@ public class JugadoresCtrl {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
         try {
-            PreparedStatement cmd = cn.prepareStatement("insert into jugadores values(NULL,?,?,?,?,?)");
+            PreparedStatement cmd = cn.prepareStatement("insert into jugadores values(NULL,?,?,?,?,?,?)");
             cmd.setInt(1, obje.getCodiEqui());
             cmd.setString(2, obje.getNombJuga());
             cmd.setInt(3, obje.getEdadJuga());
             cmd.setDouble(4, obje.getAltuJuga());
             cmd.setDouble(5, obje.getPesoJuga());
+            cmd.setBytes(6, obje.getImag());
             cmd.executeUpdate();
             resp=true;
             
@@ -60,7 +61,7 @@ public class JugadoresCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp.add(new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6)));               
+                resp.add(new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6), rs.getBytes(7)));               
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -93,7 +94,7 @@ public class JugadoresCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp = (new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6)));               
+                resp = (new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6), rs.getBytes(7)));               
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -122,7 +123,7 @@ public class JugadoresCtrl {
         Connection cn = new Conexion().getConn();
         try
         {
-            PreparedStatement cmd = cn.prepareStatement("update jugadores set codi_equi = "+obje.getCodiEqui()+" , nomb_juga = '"+obje.getNombJuga()+"' , edad_juga = "+obje.getEdadJuga()+" , altu_juga = "+obje.getAltuJuga()+" , peso_juga = "+obje.getPesoJuga()+" where codi_juga = "+obje.getCodiJuga()+"");
+            PreparedStatement cmd = cn.prepareStatement("update jugadores set codi_equi = "+obje.getCodiEqui()+" , nomb_juga = '"+obje.getNombJuga()+"' , edad_juga = "+obje.getEdadJuga()+" , altu_juga = "+obje.getAltuJuga()+" , peso_juga = "+obje.getPesoJuga()+" , imagen = '"+obje.getImag()+"' where codi_juga = "+obje.getCodiJuga()+"");
             cmd.executeUpdate();
             resp=true;
         }

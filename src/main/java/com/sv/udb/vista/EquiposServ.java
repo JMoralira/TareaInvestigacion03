@@ -7,18 +7,28 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquiposCtrl;
 import com.sv.udb.modelo.Equipos;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Jose Lira
  */
+@MultipartConfig
 @WebServlet(name = "EquiposServ", urlPatterns = {"/EquiposServ"})
 public class EquiposServ extends HttpServlet {
 
@@ -45,10 +55,17 @@ public class EquiposServ extends HttpServlet {
             if(CRUD.equals("Guardar"))
             {
             Equipos obje = new Equipos();
-            //obje.setCodiEqui(0);
             obje.setNombEqui(request.getParameter("nomb"));
             obje.setDescEqui(request.getParameter("desc"));
-            
+            Part filePart = request.getPart("ima");
+            int fotoSize = (int)filePart.getSize();
+            byte[] foto = null;
+            foto = new byte[fotoSize];
+            try(DataInputStream dataImg = new DataInputStream(filePart.getInputStream()))
+            {
+                dataImg.readFully(foto);
+            }
+            obje.setImag(foto);
             if(new EquiposCtrl().guar(obje))
             {
                 
@@ -68,6 +85,7 @@ public class EquiposServ extends HttpServlet {
                 request.setAttribute("codi", obje.getCodiEqui());                
                 request.setAttribute("nomb", obje.getNombEqui());                
                 request.setAttribute("desc", obje.getDescEqui()); 
+                
                 mens = "Información consultada";
                 }
                 else 
