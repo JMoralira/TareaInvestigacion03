@@ -3,6 +3,8 @@
     Created on : 03-19-2017, 03:15:52 PM
     Author     : Jose Lira
 --%>
+<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Base64"%>
 <%@page import="com.sv.udb.controlador.EquiposCtrl"%>
 <%@page import="com.sv.udb.modelo.Equipos"%>
@@ -59,16 +61,19 @@
                 </div> 
         </div>
         </div>
-      
+             <c:if test="${codi==null}">
                 <button class="btn waves-effect waves-light" type="submit" name="btoJuga" value="Guardar">Guardar
                 <i class="material-icons right">send</i>
                 </button>
+             </c:if>
+                            <c:if test="${codi !=null and codi!=''}">
                 <button class="btn waves-effect waves-light" type="submit" name="btoJuga" value="Modificar">Modificar
                 <i class="material-icons right">send</i>
                 </button>
                 <button class="btn waves-effect waves-light" type="submit" name="btoJuga" value="Eliminar">Eliminar
                 <i class="material-icons right">send</i>
                 </button>
+                </c:if>
                 <button class="btn waves-effect waves-light" type="submit" name="btoJuga" value="Nuevo">Nuevo 
                 <i class="material-icons right">send</i>
                 </button>
@@ -88,30 +93,26 @@
                 <th>Edad</th>
                 <th>Altura</th>
                 <th>Peso</th>
-                <th>Imagen</th>
+
             </tr>
             </thead>
             <tbody>
             <%
-            for (Jugadores temp : new JugadoresCtrl().constTodo())
-            {
-                 byte[] photo = temp.getImag();
-                    String bphoto = Base64.getEncoder().encodeToString(photo);
-
+                List<Jugadores> listEqui = new JugadoresCtrl().constTodo();
+                pageContext.setAttribute("listJugaJSTL", listEqui);
             %>
+            
+                        <c:forEach items="${listJugaJSTL}" var="temp">
             <tr>
-                <td><p><input type="radio" name="codiJugaRadi" value="<%= temp.getCodiJuga() %>" id="<%= temp.getCodiJuga() %>"/>
-                        <label for="<%=temp.getCodiJuga()%>"></label></p></td>
-                <td><%= temp.getCodiEqui() %></td>
-                <td><%= temp.getNombJuga() %></td>
-                <td><%= temp.getEdadJuga() %></td>
-                <td><%= temp.getAltuJuga() %></td>
-                <td><%= temp.getPesoJuga() %></td>
-                <td><img src="data:image/*;base64,<%=bphoto%>" class="materialboxed" width="100" height="100"></td>
-            </tr>
-            <%
-            }
-            %>
+                <td><p><input type="radio" name="codiJugaRadi" value="${temp.getCodiJuga()}" id="${temp.getCodiJuga()}"/>
+                        <label for="${temp.getCodiJuga()}"></label></p></td>
+                <td>${temp.getCodiEqui()}</td>
+                <td>${temp.getNombJuga()}</td>
+                <td>${temp.getEdadJuga() }%></td>
+                <td>${temp.getAltuJuga()}</td>
+                <td>${temp.getPesoJuga()}</td>
+            </tr>                  
+            </c:forEach>
             </tbody>
         </table>
             <button class="btn waves-effect waves-light" type="submit" name="btoJuga" value="Consultar">Consultar

@@ -134,7 +134,7 @@ public class EquiposServ extends HttpServlet {
             }
             else if(CRUD.equals("Nuevo"))
             {
-                request.setAttribute("codi", "");
+                request.setAttribute("codi", null);
                 request.setAttribute("nomb", "");
                 request.setAttribute("desc", "");
             }

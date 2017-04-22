@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Base64"%>
 <%@page import="com.sv.udb.controlador.EquiposCtrl"%>
 <%@page import="com.sv.udb.modelo.Equipos"%>
@@ -35,15 +37,24 @@
                 </div> 
         </div>
         </div>
+                
+                            <c:if test="${codi==null}">
                 <button class="btn waves-effect waves-light" type="submit" name="btonEqui" value="Guardar"> Guardar
                 <i class="material-icons right">send</i>
+               
                 </button>
+                 </c:if>
+                                <c:if test="${codi != '' and codi!=null}">
                 <button class="btn waves-effect waves-light" type="submit" name="btonEqui" value="Modificar">Modificar
                 <i class="material-icons right">send</i>
+              
                 </button>
+                 
+                            
                 <button class="btn waves-effect waves-light" type="submit" name="btonEqui" value="Eliminar">Eliminar
                 <i class="material-icons right">send</i>
                 </button>
+                </c:if>
                 <button class="btn waves-effect waves-light" type="submit" name="btonEqui" value="Nuevo">Nuevo
                 <i class="material-icons right">send</i>
                 </button>
@@ -60,28 +71,26 @@
                 <th>Cons</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>      
-                <th>Imagen</th>
             </tr>
             </thead>
-            <tbody>
-                
-            <%
-            for (Equipos temp : new EquiposCtrl().consTodo())
-            {
-                byte[] photo = temp.getImag();
-                    String bphoto = Base64.getEncoder().encodeToString(photo);
+            <tbody>  
+             <%
+                List<Equipos> listEqui = new EquiposCtrl().consTodo();
+                pageContext.setAttribute("listEquiJSTL", listEqui);
             %>
-            <tr>
-                <td><p><input name="codiEquiRadi" type="radio" id="<%=temp.getCodiEqui()%>" value="<%=temp.getCodiEqui()%>" />
-                        <label for="<%=temp.getCodiEqui()%>"></label></p></td>
-                <td><%= temp.getNombEqui() %></td>
-                <td><%= temp.getDescEqui() %></td>                
-                 <td><img src="data:image/*;base64,<%=bphoto%>" class="materialboxed" width="100" height="100"></td>
+            <c:forEach items="${listEquiJSTL}" var="temp">
+             <tr>
+                <td><p><input name="codiEquiRadi" type="radio" id="${temp.getCodiEqui()}" value="${temp.getCodiEqui()}" />
+                        <label for="${temp.getCodiEqui()}"></label></p></td>
+                <td>${temp.getNombEqui()}</td>
+                <td>${temp.getDescEqui()}</td>                
+               
             </tr>
-            <%
-            }
-            %>
-            </tbody>
+            
+            
+
+            </c:forEach>
+         </tbody>
         </table>
             <button class="btn waves-effect waves-light" type="submit" name="btonEqui" value="Consultar">Consultar
             <i class="material-icons right">send</i>
